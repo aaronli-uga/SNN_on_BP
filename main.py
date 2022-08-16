@@ -2,7 +2,7 @@
 Author: Qi7
 Date: 2022-08-16 17:46:39
 LastEditors: aaronli-uga ql61608@uga.edu
-LastEditTime: 2022-08-16 18:05:13
+LastEditTime: 2022-08-16 18:08:06
 Description: 
 '''
 import enum
@@ -50,7 +50,7 @@ print('===============================')
 print('start training......')
 
 Lr = 0.001
-epochs = 100
+epochs = 1000
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = STCN(num_inputs=1, num_channels=[64, 64, 64, 64, 64, 64], dropout=0.1)
 model.to(device)
@@ -95,7 +95,7 @@ for epoch in range(epochs):
         np.save("train_loss_history.npy", loss_history)
     
     # save current tpoch model
-    np.save(model.state_dict(), "current_epoch_model.pth")
+    torch.save(model.state_dict(), "current_epoch_model.pth")
 
 plt.plot(counter, loss_history)
 plt.show()
