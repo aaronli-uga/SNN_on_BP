@@ -1,3 +1,10 @@
+'''
+Author: Qi7
+Date: 2022-08-16 17:46:39
+LastEditors: aaronli-uga ql61608@uga.edu
+LastEditTime: 2022-08-16 18:05:13
+Description: 
+'''
 import enum
 import os
 from matplotlib import pyplot as plt
@@ -60,6 +67,7 @@ iteration_number= 0
 for epoch in range(epochs):
     # Iterate over batches
     for i, (s1, s2, _, _, label) in enumerate(my_train_dataloader, 0):
+        data_size = len(my_train_dataloader.dataset)
 
         # Send the signals to devce(cpu or cuda)
 
@@ -75,12 +83,19 @@ for epoch in range(epochs):
 
         optimizer.step()
 
-        # if i % 100 == 0:
-        #     print(f"Epoch number {epoch}\n Current loss {loss_contrastive.item()}\n")
-        #     iteration_number += 10
+        if i % 100 == 0:
+            print(f"Epoch number {epoch}\n Current loss {loss_contrastive.item()}\n")
+            iteration_number += 10
 
-        #     counter.append(iteration_number)
-        #     loss_history.append(loss_contrastive.item())
+            current = i * len(s1)
+            print(f"loss:{loss_contrastive.item():>7f})-----[{current:>5d}/{data_size:>5d}]")
+
+            counter.append(iteration_number)
+            loss_history.append(loss_contrastive.item())
+        np.save("train_loss_history.npy", loss_history)
+    
+    # save current tpoch model
+    np.save(model.state_dict(), "current_epoch_model.pth")
 
 plt.plot(counter, loss_history)
 plt.show()
