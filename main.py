@@ -2,7 +2,7 @@
 Author: Qi7
 Date: 2022-08-16 17:46:39
 LastEditors: aaronli-uga ql61608@uga.edu
-LastEditTime: 2022-08-16 18:08:06
+LastEditTime: 2022-08-17 15:16:55
 Description: 
 '''
 import enum
@@ -62,7 +62,7 @@ optimizer = optim.Adam(model.parameters(), lr = Lr)
 model.train()
 counter = []
 loss_history = [] 
-iteration_number= 0
+iteration_number= 0 
 
 for epoch in range(epochs):
     # Iterate over batches
